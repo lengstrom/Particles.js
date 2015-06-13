@@ -4,7 +4,9 @@ function Particle() {
 
 	};
 
-	this.
+	this.buildRenderer = function() {
+		this.renderer = true;
+	}
 }
 
 Particle.prototype = {

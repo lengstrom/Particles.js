@@ -1,13 +1,21 @@
+
 function ParticleSystem(canvas) = {
-	this.particles = [];
-	var particles = this.particles;
+	var particles = [];
+	this.getParticles = function() {
+		return particles
+	}
+
+	this.removeParticle = function(particle) {
+		particles.splice(particles.index(particle), 1);
+		return this
+	}
 
 	this.num = function(n) {
-		if (this.particles.length > n) {
-			this.particles = this.particles.slice(0, n)
+		if (particles.length > n) {
+			particles = particles.slice(0, n)
 		} else {
-			while (this.particles.length < n) {
-				this.particles.push(new Particle());
+			while (particles.length < n) {
+				particles.push(new Particle());
 			}
 		}
 
@@ -15,7 +23,11 @@ function ParticleSystem(canvas) = {
 	};
 
 	this.build = function() {
-)
+		for (var i = 0; i < particles.length; i++) {
+			particles[i].buildRenderer();
+		}
+
+		this.num = undefined; // remove functionality of num after building - could be unpredictable
 		return this;
 	};
 
@@ -32,13 +44,13 @@ function makeSetter(arg) {
 		return function(value, max) {
 			var valueType = typeof value;
 			if (!max) {
-				this.particles.map();
+				particles.map();
 			} else if (valueType !== 'function') {
-				this.particles.map(function(_, p) {
+				particles.map(function(_, p) {
 					p[arg] = c;
 				});
 			} else {
-				this.particles.map(function(_, p, __) {
+				particles.map(function(_, p, __) {
 					p[arg] = c(_, p, __);
 				});
 			return this;
@@ -47,17 +59,17 @@ function makeSetter(arg) {
 		return function(value, max) {
 			var valueType = typeof value;
 			if (!max) {
-				this.particles.map(function(_, p) {
+				particles.map(function(_, p) {
 					p[arg] = Math.random() * max - min;
 					p.renderer = false;
 				});
 			} else if (valueType !== 'function') {
-				this.particles.map(function(_, p) {
+				particles.map(function(_, p) {
 					p[arg] = c;
 					p.renderer = false;
 				});
 			} else {
-				this.particles.map(function(_, p, __) {
+				particles.map(function(_, p, __) {
 					p[arg] = c(_, p, __);
 					p.renderer = false;
 				});
@@ -65,3 +77,5 @@ function makeSetter(arg) {
 		};
 	}
 }
+
+return ParticleSystem
