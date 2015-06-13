@@ -33,12 +33,12 @@ function ParticleSystem(canvas) = {
 }
 
 var BaseParticleSystem = {};
-for (i in Particle.prototype) {
-	BaseParticleSystem[i] = makeSetter(i);
+for (i in particleAttributes) {
+	BaseParticleSystem[i] = makeMapSetter(i);
 }
 
 ParticleSystem.prototype = BaseParticleSystem;
-function makeSetter(arg) {
+function makeMapSetter(arg) {
 	if (arg in ['velocity']) {
 		return function(value, max) {
 			var valueType = typeof value;
