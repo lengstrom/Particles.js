@@ -30,11 +30,10 @@ function ParticleSystem(canvas) = {
 		this.num = undefined; // remove functionality of num after building - could be unpredictable
 		return this;
 	};
-
 }
 
 var BaseParticleSystem = {};
-for (i in particle.prototype) {
+for (i in Particle.prototype) {
 	BaseParticleSystem[i] = makeSetter(i);
 }
 
@@ -61,17 +60,17 @@ function makeSetter(arg) {
 			if (!max) {
 				particles.map(function(_, p) {
 					p[arg] = Math.random() * max - min;
-					p.renderer = false;
+					p.buildRenderer = false;
 				});
 			} else if (valueType !== 'function') {
 				particles.map(function(_, p) {
 					p[arg] = c;
-					p.renderer = false;
+					p.buildRenderer = false;
 				});
 			} else {
 				particles.map(function(_, p, __) {
 					p[arg] = c(_, p, __);
-					p.renderer = false;
+					p.buildRenderer = false;
 				});
 			return this;
 		};

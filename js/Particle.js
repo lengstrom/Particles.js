@@ -1,8 +1,18 @@
 function Particle() {
-	this.renderer = false;
+	var renderer = false;
+	var hidden;
+
+	for (var i in Particle.prototype) {
+		this['set' + toUpperCase(i.charAt(0)) + i.substr(1)] = function()
+	}
+
 	this.hide = function() {
 
 	};
+
+	this.show = function() {
+
+	}
 
 	this.buildRenderer = function() {
 		this.renderer = true;
@@ -24,9 +34,4 @@ Particle.prototype = {
 	src:0,
 	opacity:0,
 	angle:0,
-}
-
-	this.remove();
-	this.hide();
-	this.show();
-}
+};
